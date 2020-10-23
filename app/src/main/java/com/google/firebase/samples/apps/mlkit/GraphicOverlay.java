@@ -32,14 +32,7 @@ public class GraphicOverlay extends View {
   private int facing = CameraSource.CAMERA_FACING_BACK;
   private Set<Graphic> graphics = new HashSet<>();
 
-//  private int mRatioWidth = 0;
-//  private int mRatioHeight = 0;
 
-  /**
-   * Base class for a custom graphics object to be rendered within the graphic overlay. Subclass
-   * this and implement the {@link Graphic#draw(Canvas)} method to define the graphics element. Add
-   * instances to the overlay using {@link GraphicOverlay#add(Graphic)}.
-   */
   public abstract static class Graphic {
     private GraphicOverlay overlay;
 
@@ -47,41 +40,21 @@ public class GraphicOverlay extends View {
       this.overlay = overlay;
     }
 
-    /**
-     * Draw the graphic on the supplied canvas. Drawing should use the following methods to convert
-     * to view coordinates for the graphics that are drawn:
-     *
-     * <ol>
-     *   <li>{@link Graphic#scaleX(float)} and {@link Graphic#scaleY(float)} adjust the size of the
-     *       supplied value from the preview scale to the view scale.
-     *   <li>{@link Graphic#translateX(float)} and {@link Graphic#translateY(float)} adjust the
-     *       coordinate from the preview's coordinate system to the view coordinate system.
-     * </ol>
-     *
-     * @param canvas drawing canvas
-     */
+
     public abstract void draw(Canvas canvas);
 
-    /**
-     * Adjusts a horizontal value of the supplied value from the preview scale to the view scale.
-     */
     public float scaleX(float horizontal) {
       return horizontal * overlay.widthScaleFactor;
     }
 
-    /** Adjusts a vertical value of the supplied value from the preview scale to the view scale. */
     public float scaleY(float vertical) {
       return vertical * overlay.heightScaleFactor;
     }
 
-    /** Returns the application context of the app. */
     public Context getApplicationContext() {
       return overlay.getContext().getApplicationContext();
     }
 
-    /**
-     * Adjusts the x coordinate from the preview's coordinate system to the view coordinate system.
-     */
     public float translateX(float x) {
       if (overlay.facing == CameraSource.CAMERA_FACING_FRONT) {
         return overlay.getWidth() - scaleX(x);
@@ -160,36 +133,5 @@ public class GraphicOverlay extends View {
     }
   }
 
-//  /**
-//   * Sets the aspect ratio for this view. The size of the view will be measured based on the ratio
-//   * calculated from the parameters. Note that the actual sizes of parameters don't matter, that
-//   * is, calling setAspectRatio(2, 3) and setAspectRatio(4, 6) make the same result.
-//   *
-//   * @param width  Relative horizontal size
-//   * @param height Relative vertical size
-//   */
-//  public void setAspectRatio(int width, int height) {
-//    if (width < 0 || height < 0) {
-//      throw new IllegalArgumentException("Size cannot be negative.");
-//    }
-//    mRatioWidth = width;
-//    mRatioHeight = height;
-//    requestLayout();
-//  }
-//
-//  @Override
-//  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//    int width = MeasureSpec.getSize(widthMeasureSpec);
-//    int height = MeasureSpec.getSize(heightMeasureSpec);
-//    if (0 == mRatioWidth || 0 == mRatioHeight) {
-//      setMeasuredDimension(width, height);
-//    } else {
-//      if (width < height * mRatioWidth / mRatioHeight) {
-//        setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
-//      } else {
-//        setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
-//      }
-//    }
-//  }
+
 }

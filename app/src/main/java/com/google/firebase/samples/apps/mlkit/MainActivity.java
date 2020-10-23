@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             public void onClick(View view) {
                 Intent intent = new Intent(context,CaptureActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
