@@ -57,6 +57,14 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab2 = findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         GridView gridView = findViewById(R.id.grid);
         imageAdapter = new ImageAdapter(this,bitmaps);
         gridView.setAdapter(imageAdapter);
