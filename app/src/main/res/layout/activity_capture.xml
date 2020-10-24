@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.google.firebase.samples.apps.mlkit.CaptureActivity">
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -47,8 +46,8 @@
         android:layout_marginBottom="-2dp"
         android:numColumns="2"
         android:scrollbars="horizontal"
-        android:horizontalSpacing="20dp"
-        android:verticalSpacing="20dp"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="10dp"
         />
 
     <android.support.v7.widget.Toolbar

@@ -1,5 +1,6 @@
 package com.google.firebase.samples.apps.mlkit;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -37,12 +38,14 @@ public class CaptureActivity extends AppCompatActivity {
     GridView gridView;
     private ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
     private ImageAdapter imageAdapter;
+    private Dialog popup_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture);
         context = this;
+        //popup_dialog = new Dialog(this);
 
         if(savedInstanceState != null){
             bitmaps = savedInstanceState.getParcelableArrayList("images");
@@ -55,6 +58,8 @@ public class CaptureActivity extends AppCompatActivity {
             imageAdapter = new ImageAdapter(this,bitmaps);
             gridView.setAdapter(imageAdapter);
         }
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +83,7 @@ public class CaptureActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -87,21 +93,7 @@ public class CaptureActivity extends AppCompatActivity {
             bitmaps.add(image);
             imageAdapter.notifyDataSetChanged();
 
-            /*
-            View linearLayout = getLayoutInflater().inflate(R.layout.image,null,false);
-            ImageView imageView = (ImageView) linearLayout.findViewById(R.id.imageView);
-            imageView.setImageBitmap(image);
-            // TEXTVIEW
-            if(imageView.getParent() != null) {
-                ((ViewGroup) imageView.getParent()).removeView(imageView); // <- fix
-            }
-            parent = (RelativeLayout) findViewById(R.id.relative);
-            LinearLayout.LayoutParams params = new LinearLayout
-                    .LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            imageView.setLayoutParams(params);
-            parent.addView(imageView);
 
-             */
 
         }
     }
@@ -143,15 +135,38 @@ public class CaptureActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
+        public View getView(final int position, View view, ViewGroup viewGroup) {
             if(bitmaps.size()==0){
                 return null;
             }
-            ImageView imageView = inflater.inflate(R.layout.image,null,false).findViewById(R.id.imageView);
+            final ImageView imageView = inflater.inflate(R.layout.image,null,false).findViewById(R.id.imageView);
             imageView.setImageBitmap(bitmaps.get(position));
             if(imageView.getParent() != null) {
                 ((ViewGroup) imageView.getParent()).removeView(imageView);
             }
+
+            /* Showing a pop up
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popup_dialog.setContentView(R.layout.popup);
+                    View popup_layout = getLayoutInflater().inflate(R.layout.popup,null);
+                    ImageView imageView_popup = (ImageView) popup_layout.findViewById(R.id.image_preview_2);
+                    imageView_popup.setImageBitmap(bitmaps.get(position));
+                    FloatingActionButton closefloat = (FloatingActionButton) popup_layout.findViewById(R.id.floating_close_2);
+
+                        closefloat.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                popup_dialog.dismiss();
+                            }
+                        });
+
+                    popup_dialog.show();
+                }
+            });
+
+             */
             return imageView;
         }
     }
