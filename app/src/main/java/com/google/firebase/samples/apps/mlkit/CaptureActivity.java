@@ -44,6 +44,18 @@ public class CaptureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_capture);
         context = this;
 
+        if(savedInstanceState != null){
+            bitmaps = savedInstanceState.getParcelableArrayList("images");
+            GridView gridView = findViewById(R.id.grid);
+            imageAdapter = new ImageAdapter(this,bitmaps);
+            gridView.setAdapter(imageAdapter);
+        }
+        else{
+            GridView gridView = findViewById(R.id.grid);
+            imageAdapter = new ImageAdapter(this,bitmaps);
+            gridView.setAdapter(imageAdapter);
+        }
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +77,6 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
-        GridView gridView = findViewById(R.id.grid);
-        imageAdapter = new ImageAdapter(this,bitmaps);
-        gridView.setAdapter(imageAdapter);
 
     }
 
@@ -145,6 +154,12 @@ public class CaptureActivity extends AppCompatActivity {
             }
             return imageView;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList("images",bitmaps);
     }
 
 }

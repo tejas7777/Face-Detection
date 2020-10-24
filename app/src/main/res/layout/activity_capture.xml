@@ -47,10 +47,8 @@
         android:layout_marginBottom="-2dp"
         android:numColumns="2"
         android:scrollbars="horizontal"
-        android:paddingRight="20dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp"
         />
 
     <android.support.v7.widget.Toolbar
